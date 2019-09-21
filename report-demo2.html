@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>西安港政务服务</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="lib/weui.min.css">
+    <link rel="stylesheet" href="css/jquery-weui.css">
+    <!--<link rel="stylesheet" href="css/report-demo.css">-->
+    <style>
+        .demo-container{
+            height: 100vh;
+            background-color: #FFFFFF;
+        }
+        /*.demo-weui-cells_form{*/
+            /*border: none;*/
+        /*}*/
+        .demo-weui-cells_form:before,.demo-weui-cells_form:after{
+            border: none;
+        }
+        .demo-weui-cells_form .weui-cell{
+            padding-top: 0;
+            padding-bottom: 0;
+            margin-bottom: 10px;
+        }
+        .input-border-style{
+            border: 1px solid #dedede;
+            height: 45px;
+            box-sizing: border-box;
+            line-height: 33px;
+            padding:5px 15px ;
+        }
+       .icon-position{
+            position: absolute;
+            right: 20px;
+        }
+        .weui-cell .demo-weui-vcode-btn{
+            border: 1px solid #dedede;
+        }
+        .err-border{
+            border-color:#f6012a!important;
+        }
+    </style>
+</head>
+<body ontouchstart>
+<div class="demo-container">
+    <div class="weui-tab">
+        <div class="weui-navbar report-navbar">
+            <a class="weui-navbar__item weui-bar__item--on" href="#login">
+                填报登录
+            </a>
+            <a class="weui-navbar__item" href="#register">
+                企业注册
+            </a>
+        </div>
+        <div class="weui-tab__bd">
+            <form id="login" class="weui-tab__bd-item weui-tab__bd-item--active">
+                <div class="weui-cells weui-cells_form demo-weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="tydm" type="text" placeholder="18位社会信用代码">
+                        </div>
+                        <i class="weui-icon-cancel icon-position"></i>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="password" type="password" placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_vcode" style="padding-right: 15px">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="yzm" id="yzm" type="text" placeholder="请输入验证码">
+                        </div>
+                        <div class="weui-cell__ft">
+                            <button class="weui-vcode-btn demo-weui-vcode-btn" id="yzm-img" data-value="5466">5466</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 15px">
+                    <a href="javascript:;" class="weui-btn weui-btn_primary" onclick="submitForm('#login')">登录</a>
+                </div>
+            </form>
+            <form id="register" class="weui-tab__bd-item">
+                <div class="weui-cells weui-cells_form demo-weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="tydm" type="text" placeholder="18位社会信用代码">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="comName" type="text" placeholder="请输入公司名称">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="comPerson" type="text" placeholder="统计联系人">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="tel" type="tel" placeholder="联系人手机号">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <!--<input class="weui-input input-border-style" name="password" type="password" placeholder="请输入密码">-->
+                            <input class="weui-input input-border-style" name="password" type="text" placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <!--<input class="weui-input input-border-style" name="confirmPassword" type="password" placeholder="再次输入密码进行确认">-->
+                            <input class="weui-input input-border-style" name="confirmPassword" type="text" placeholder="再次输入密码进行确认">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <select class="weui-select input-border-style" name="select" id="">
+                                <option value="">请选择企业类型</option>
+                                <option value="1">私营企业</option>
+                                <option value="2">国营企业</option>
+                                <option value="3">事业单位</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div style="padding: 15px">
+                    <a href="javascript:;" class="weui-btn weui-btn_primary" onclick="submitForm('#register')">注册</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="lib/jquery-2.1.4.js"></script>
+<script src="lib/fastclick.js"></script>
+<script>
+    $(function() {
+        FastClick.attach(document.body);
+    });
+</script>
+<script src="js/jquery-weui.js"></script>
+<!--<script src="js/WxValidate.js"></script>-->
+<script src="test-js/valid.js"></script>
+<script src="test-js/login.js"></script>
+<script>
+    $(function(){
+        $("body .weui-navbar__item").click(function(){
+            var index = $(this).index();
+            console.log(index)
+            var id = $(this).attr("href");
+            $(id).find(".input-border-style").removeClass("err-border").val("");
+        })
+    })
+    var initRuleAndMsg = function() {
+        return {
+            rule : {
+                tydm: {type: ['required', 'unified_code']},
+                password: {type: ['required', 'pwd']},
+                yzm: {type: ['required']},
+                comName: {type: ['required']},
+                comPerson: {type: ['required']},
+                tel: {type: ['required', 'phone']},
+                confirmPassword: {type: ['required', 'pwd'], equalTo: 'password'},
+                select: {type: ['required']}
+                },
+            message : {
+                tydm: {typeMsg: '统一信用代码'},
+                password: {typeMsg: '密码'},
+                yzm: {typeMsg: '验证码'},
+                comName: {typeMsg: '公司名称'},
+                comPerson: {typeMsg: '统计联系人'},
+                tel: {typeMsg: '手机号'},
+                confirmPassword: {typeMsg: '确认密码', equalTo: '确认密码和新密码不一致'},
+                select: {typeMsg: '企业类型'}
+            }
+        }
+    }
+    function submitForm (id) {
+        $(".weui-mask, .weui-dialog").remove();
+        $(id).find(".input-border-style").removeClass("err-border");
+        var tempForm = $(id).serializeArray();
+        var formObj = {}
+        if (tempForm.length != 0) {
+            tempForm.map(items => {
+                formObj[items.name] = items.value
+            })
+        }
+        var rulesObj = initRuleAndMsg();
+        var errorList = formValid({data: formObj, rules: rulesObj.rule, message: rulesObj.message, formId: id});
+        if ( errorList.length != 0) {
+            errorList.map(item => {
+                $(id).find("[name = "+ item.param + "]").addClass("err-border");
+            })
+            $.alert(errorList[0].msg, '');
+            return false
+        }
+        $.alert('提交成功', function () {
+            console.log('提交成功');
+            if (id === '#register') {
+                window.location.href = './regSuccess.html'
+            }
+        });
+
+    }
+</script>
+</body>
+</html>

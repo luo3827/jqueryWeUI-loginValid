@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>西安港政务服务</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="lib/weui.min.css">
+    <link rel="stylesheet" href="css/jquery-weui.css">
+    <!--<link rel="stylesheet" href="css/report-demo.css">-->
+    <style>
+        .demo-container{
+            height: 100vh;
+            background-color: #FFFFFF;
+        }
+        /*.demo-weui-cells_form{*/
+            /*border: none;*/
+        /*}*/
+        .demo-weui-cells_form:before,.demo-weui-cells_form:after{
+            border: none;
+        }
+        .demo-weui-cells_form .weui-cell{
+            padding-top: 0;
+            padding-bottom: 0;
+            margin-bottom: 10px;
+        }
+        .input-border-style{
+            border: 1px solid #dedede;
+            height: 45px;
+            box-sizing: border-box;
+            line-height: 33px;
+            padding:5px 15px ;
+        }
+       .icon-position{
+            position: absolute;
+            right: 20px;
+        }
+        .weui-cell .demo-weui-vcode-btn{
+            border: 1px solid #dedede;
+        }
+        .err-border{
+            border-color:#f6012a!important;
+        }
+    </style>
+</head>
+<body ontouchstart>
+<div class="demo-container">
+    <div class="weui-tab">
+        <div class="weui-navbar report-navbar">
+            <a class="weui-navbar__item weui-bar__item--on" href="#login">
+                填报登录
+            </a>
+            <a class="weui-navbar__item" href="#register">
+                企业注册
+            </a>
+        </div>
+        <div class="weui-tab__bd">
+            <form id="login" class="weui-tab__bd-item weui-tab__bd-item--active">
+                <div class="weui-cells weui-cells_form demo-weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="tydm" type="text" placeholder="18位社会信用代码">
+                        </div>
+                        <i class="weui-icon-cancel icon-position"></i>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="password" type="password" placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_vcode" style="padding-right: 15px">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="yzm" type="text" placeholder="请输入验证码">
+                        </div>
+                        <div class="weui-cell__ft">
+                            <button class="weui-vcode-btn demo-weui-vcode-btn">5466</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 15px">
+                    <a href="javascript:;" class="weui-btn weui-btn_primary" onclick="submitForm('#login')">登录</a>
+                </div>
+            </form>
+            <form id="register" class="weui-tab__bd-item">
+                <div class="weui-cells weui-cells_form demo-weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="tydm" type="text" placeholder="18位社会信用代码">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="comName" type="text" placeholder="请输入公司名称">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="comPerson" type="text" placeholder="统计联系人">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="tel" type="tel" placeholder="联系人手机号">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="password" type="password" placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <input class="weui-input input-border-style" name="confirmPassword" type="password" placeholder="再次输入密码进行确认">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <select class="weui-select input-border-style" name="select" id="">
+                                <option value="">请选择</option>
+                                <option value="1">科目一</option>
+                                <option value="2">科目二</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div style="padding: 15px">
+                    <a href="javascript:;" class="weui-btn weui-btn_primary" onclick="submitForm('#register')">注册</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="lib/jquery-2.1.4.js"></script>
+<script src="lib/fastclick.js"></script>
+<script>
+    $(function() {
+        FastClick.attach(document.body);
+    });
+</script>
+<script src="js/jquery-weui.js"></script>
+<script src="js/WxValidate.js"></script>
+<script>
+    $(function(){
+        console.log(WxValidate);
+        initValidate(0);
+        $("body .weui-navbar__item").click(function(){
+            var index = $(this).index();
+            console.log(index)
+            initValidate(index);
+            var id = $(this).attr("href");
+            $(id).find(".input-border-style").removeClass("err-border").val("");
+        })
+        /*
+        * input onblur事件
+        * */
+        $(".demo-weui-cells_form .weui-input").blur(function () {
+            // $(".weui-mask, .weui-dialog").remove();
+            var id = $(this).parents(".weui-tab__bd-item").attr("id");
+            console.log(id)
+            if($(".weui-mask").length == 0) {
+                var key = $(this).attr("name");
+                var value = $(this).val();
+                var obj = {};
+                var param = [];
+                if ($("#"+id).find("[name = 'confirmPassword']").length != 0) {
+                   if ( key === 'password') {
+                       obj['confirmPassword'] = $("#"+id).find("[name = 'confirmPassword']").val();
+                       param.push('confirmPassword');
+                   } else if (key === 'confirmPassword') {
+                       obj['password'] = $("#"+id).find("[name = 'password']").val();
+                       param.push('password');
+                   }
+                }
+                obj[key] = value;
+                param.push(key);
+                /*测试onblur验证事件*/
+                if (!wxValidate.checkBlurForm(obj, param)){
+                    var error = wxValidate.errorList[0]
+                    $(this).addClass("err-border");
+                    $.alert(error.msg, '');
+                    return false
+                }else{
+                    if (key === 'password' || key === 'confirmPassword') {
+                        $("#"+id).find("[name = 'confirmPassword']").removeClass("err-border");
+                        $("#"+id).find("[name = 'password']").removeClass("err-border");
+                    } else {
+                        $(this).removeClass("err-border");
+                    }
+                }
+            }
+
+        })
+    })
+    function initValidate (index) {
+        // 验证字段的规则
+        const rules = [
+            {
+                tydm: {
+                    required: true,
+                    unifiedCode: true
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 15
+                },
+                yzm: {
+                    required: true,
+                    securityCode: true
+                }
+            },
+            {
+                tydm: {
+                    required: true,
+                    unifiedCode: true
+                },
+                comName: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 30
+                },
+                comPerson: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 15
+                },
+                tel: {
+                    required: true,
+                    tel: true
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 15
+                },
+                confirmPassword: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 15,
+                    equalTo: 'password'
+                },
+                select: {
+                    required: true
+                }
+            }
+        ]
+
+        // 验证字段的提示信息，若不传则调用默认的信息
+        const messages = [
+            {
+                tydm: {
+                    required: '请输入18位社会信用代码',
+                    unifiedCode: '请输入18位社会信用代码'
+                },
+                password: {
+                    required: '请输入新密码',
+                    minlength: '密码长度不少于6位',
+                    maxlength: '密码长度不多于15位'
+                },
+                yzm: {
+                    required: '请输入验证码',
+                    securityCode: '请输入验证码'
+                }
+            },
+            {
+                tydm: {
+                    required: '请输入18位社会信用代码',
+                    unifiedCode: '请输入18位社会信用代码'
+                },
+                comName: {
+                    required: '请输入公司名称',
+                    minlength: '公司名称长度不少于4位',
+                    maxlength: '公司名称长度不多于30位'
+                },
+                comPerson: {
+                    required: '请输入统计联系人',
+                    minlength: '统计联系人长度不少于2位',
+                    maxlength: '统计联系人长度不多于15位'
+                },
+                tel: {
+                    required: '请输入手机号',
+                    tel: '请输入正确的手机号'
+                },
+                password: {
+                    required: '请输入新密码',
+                    minlength: '密码长度不少于6位',
+                    maxlength: '密码长度不多于15位'
+                },
+                confirmPassword: {
+                    required: '请输入确认密码',
+                    minlength: '密码长度不少于6位',
+                    maxlength: '密码长度不多于15位',
+                    equalTo: '确认密码和新密码保持一致'
+                },
+                select: {
+                    required: '请选择选项'
+                }
+            }
+        ]
+        // 创建实例对象
+        wxValidate = new WxValidate(rules[index], messages[index])
+
+        // WxValidate = new WxValidate(rules.login, messages.login)
+    }
+    function submitForm (id) {
+        $(".weui-mask, .weui-dialog").remove();
+        $(id).find(".input-border-style").removeClass("err-border");
+        var tempForm = $(id).serializeArray();
+        var formObj = {}
+        if (tempForm.length != 0) {
+            tempForm.map(items => {
+                formObj[items.name] = items.value
+            })
+        }
+        console.log(formObj)
+        // 传入表单数据，调用验证方法
+        if (!wxValidate.checkForm(formObj)) {
+            var errorList = wxValidate.errorList
+            errorList.map(item => {
+                $(id).find("[name = "+ item.param + "]").addClass("err-border");
+            })
+            $.alert(errorList[0].msg, '');
+            return false
+        }
+        $.alert('提交成功', function () {
+            console.log('提交成功');
+            if (id === '#register') {
+                window.location.href = './regSuccess.html'
+            }
+        });
+
+    }
+</script>
+</body>
+</html>

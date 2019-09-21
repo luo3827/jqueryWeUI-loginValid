@@ -1,0 +1,10 @@
+.report-navbar{
+    background-color: #FFFFFF;
+}
+.report-navbar .weui-navbar__item {
+    color: #b6b6b6;
+    font-weight: bold;
+}
+.report-navbar .weui-navbar__item:after {
+    border: none;
+}
